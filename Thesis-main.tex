@@ -1,0 +1,103 @@
+%\title{TAU_MSc_PhD_Thesis_Template}
+\documentclass{report}
+\usepackage{mathptmx}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,headheight=1cm,headsep=1cm,footskip=1cm}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{verbatim}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[numbers]{natbib}
+\usepackage{nomencl}
+% the following is useful when we have the old nomencl.sty package
+\providecommand{\printnomenclature}{\printglossary}
+\providecommand{\makenomenclature}{\makeglossary}
+\makenomenclature
+\doublespacing
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{tauthesis}
+\usepackage[font={small,bf}, labelfont={small,bf}, margin=1cm]{caption}
+\usepackage{titlesec}
+\newcommand{\hsp}{\hspace{20pt}}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp}{0pt}{\Huge\bfseries}
+
+
+\Title{\textbf{Thesis Title}}
+\Author{First Last}
+\Year{August 2013}
+\Supervisor{Prof. Alex Liberzon}
+\Department{School of Mechanical Engineering}
+\Degree{Master of Science}
+% \Degree{Doctor of Philosophy}
+
+\makeatother
+
+\usepackage[english]{babel}
+\begin{document}
+
+\prelimpages
+
+\titlepage
+
+
+
+
+\include{Abstract}
+
+\tableofcontents{}
+\footnote{Split the thesis into separate chapters. Use \textbackslash{}include
+mode to include the separate files.}
+
+\acknowledgments{I would like to thank my ...}
+
+\textpages
+
+\listoffigures
+
+
+\listoftables
+
+
+\printnomenclature{}
+
+\include{Introduction}
+
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+
+\appendix
+\include{appendix}
+
+\newpage{}
+
+\begin{comment}
+It is possible to create the Hebrew part in \LyX{}, but this is less
+of our concern. Any typesetting software like \LyX{} (or Word or OpenOffice)
+is as good for this purpose. After creating the PDF file from the
+Hebrew document, include it here using the Insert -> File -> External
+material -> PDFpages (one of the options). See the example below. 
+\end{comment}
+
+
+\includepdf[pages=-]{hebrew_part}
+\end{document}
