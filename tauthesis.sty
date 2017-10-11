@@ -49,11 +49,11 @@
 % margins are approximately 1 inch, except 1.5 inch at the binding
 %
 
-\textheight 610\p@ \textwidth 390\p@
-\oddsidemargin 40\p@ \evensidemargin 22\p@
+\textheight 640\p@ \textwidth 430\p@
+\oddsidemargin 30\p@ \evensidemargin 11\p@
 \marginparwidth 85\p@ \marginparsep 7\p@
-\topmargin 0\p@   \headheight 12\p@ \headsep 36\p@
-\footnotesep=14\p@
+\topmargin 0\p@   \headheight 6\p@ \headsep 18\p@
+\footnotesep=7\p@
 
 \setlength\parindent{1.5em}
 
@@ -175,7 +175,7 @@
    \def\@chapapp{\protect\@textofChapter}
    \def\Thechapter{\Roman{chapter}}        %% Roman chapter headings
    \pagenumbering{arabic}
-   \textheight 610pt  % allow for no footers (vers 1.3)
+   \textheight 650pt  % allow for no footers (vers 1.3)
      \footskip 40pt
    % \ifarchitect \textwidth 614pt \oddsidemargin 36pt \twocolumn\fi
    }
@@ -194,7 +194,7 @@
 %% Removed \uppercase 
 \def\@makechapterhead#1{ \vspace*{2pc} {\centering
  \ifnum \c@secnumdepth >\m@ne \Large \@chapapp{} \Thechapter \par
- \vspace{10pt} \fi \Large \expandafter{\noindent #1}\par
+ \vspace{5pt} \fi \Large \expandafter{\noindent #1}\par
  \nobreak \vspace{20pt}} \noindent }
 %
 %% Removed \uppercase
@@ -377,7 +377,7 @@
 %  ----  Preliminary pages  ---------------------------
 %
 \def\prelimpages{ % sets page numbering for the preliminary pages
-   \pagestyle{empty} % will be {plain} at start of toc
+   \pagestyle{plain} % Changed from {empty} to {plain} to allow numbering of included documents (with \include{}) under \prelimpages environment.
    \pagenumbering{roman}
    \setcounter{page}{1}
    \textheight 610pt  % add separation for page numbers (vers 1.3)
@@ -392,19 +392,37 @@
 %  options and defaults
 %
 \def\Title#1{\gdef\@Title{#1}}
-\def\Author#1{\gdef\@Author{#1}}
+\def\Author#1{\gdef\@Author{\Large \textbf #1}}
 \def\Year#1{\gdef\@Year{#1}}  \Year{\year}
-\def\Degree#1{\gdef\@Degree{#1}} \Degree{Doctor of Philosophy}
+%% as a supervisor is not necessarily a professor
+\def\Supervisor#1{\gdef\@Supervisor{{#1}}}
+\def\SecondSupervisor#1{\gdef\@SecondSupervisor{{#1}}}
+\def\Degree#1{\gdef\@Degree{#1}}
 
 %%TODO:
 %%  Add code to allow  M.Sc, M.A, M.E, M.FA degrees as well.
 %
-\def\School#1{\gdef\@School{#1}} \School{Tel Aviv University}
+\def\University#1{\gdef\@University{#1}} 
+\def\School#1{\gdef\@School{#1}}
+\def\Faculty#1{\gdef\@Faculty{#1}}
+\def\Department#1{\gdef\@Department{#1}} 
 \def\Degreetext#1{\gdef\@Degreetext{#1}} 
-  \Degreetext{A thesis\\%
-    submitted in partial fulfilment\\%
-    of the requirements for the Degree\\%
-    of\\}
+  \Degreetext{A thesis submitted toward the degree of\\%
+    \@Degree}
+    
+\def\Header#1{\gdef\@Header{#1}} 
+  \Header{{\Large\textbf{\MakeUppercase{\@University}}}\\ %
+  \@Faculty \\%
+  \@School}
+
+\def\SupervisionText#1{\gdef\@SupervisionText{#1}}   
+  \SupervisionText {{\small This research was carried out at \@University\\
+      in the \@Department\\
+      Faculty of Engineering\\
+      under the supervision of \@Supervisor\\
+      and \@SecondSupervisor\\}}
+    
+    
 \newcount\@Signatures 
 \def\Signatures#1{\global\@Signatures=#1\relax}
   \Signatures{3} % number of signature lines
@@ -430,44 +448,64 @@
     \begin{tabular}{l l}%
       \@Committee
     \end{tabular}}}
-
- \def\titlepage{                   % Prints the title page
-    \thispagestyle{empty}
-            \centerline{\includegraphics[width=.9\textwidth]{taulogo}}
-    \vspace{84pt}
+    
+%%%%%%%%%%%%%  Title %%%%%%%%%%%%%%%
+ \def\titlepage{                  
+    \thispagestyle{empty} 
     \begin{center}
+    \@Header \\
+    \vspace{84pt}
       {\Large
       \lineskip 3ex
-      \@Title\par}                  %% The Title
-      \vskip0pt plus2fill\relax
-      %%\rule{75mm}{0.5pt}
-      \vskip0pt plus2fill\relax
+      \@Title\par}   
+      \par\vskip0pt plus2fill\relax               
       \large
-      \@Degreetext                  %% A Thesis\ldots of
-      \par%\vskip0pt plus2fill\relax
-      \@Degree                      %% The Degree
-      \par%\vskip0pt plus2fill\relax
+      \@Degreetext
+      \par                  
+      %\par\vskip0pt plus2fill\relax
       \@textofby
-      \par%\vskip0pt plus2fill\relax
-      \@Author                      %% Author
-      \par\vskip0pt plus1fill\relax
-      %% \rule{37.5mm}{0.5pt}
+      %\par\vskip0pt plus1fill\relax
+      \par
+      \@Author                     
+      \par\vskip0pt plus2fill\relax
     \end{center}
-     \vskip0pt plus1fill\relax
-    \ifx\@empty\@Committee         %% The Examining Committee (if known)
-    \else
-      \ExamCommittee
-    \fi
     \begin{center}
       \large
       \par\vskip0pt plus2fill\relax
-      \@School                     %% School
-      \par%\vskip0pt plus2fill\relax
-      \@Year                       %% Year
-      \par
+      \@Year                      
     \end{center}
     \mbox{}
     \let\titlepage\relax}
+
+%%%%%%%%%%%%%  Second Title %%%%%%%%%%%
+
+  \def\secondtitlepage{
+  \cleardoublepage  
+  \thispagestyle{empty}  
+    \begin{center}
+    \@Header\\
+    \vspace{84pt}
+      {\Large
+      \lineskip 3ex
+      \@Title\par} 
+      \par\vskip0pt plus2fill\relax                  
+      \large
+      \@Degreetext                  
+      \par
+      \@textofby
+      \par
+      \@Author                      
+      \par\vskip0pt plus2fill\relax
+    \@SupervisionText  
+    \end{center}
+    \begin{center}
+      \large
+      \par\vskip0pt plus2fill\relax
+      \@Year                       %% Year
+    \end{center}
+    \mbox{}
+    \let\secondtitlepage\relax}
+
 
 %   Quote slip
 %
@@ -499,7 +537,7 @@
    \addcontentsline{toc}{chapter}{\protect\@textofAbstract}
    \cleardoublepage
    \begin{center}
-%      \@School
+%      \@University
 %      \par\vskip1pc
      \Large
      \@textofAbstract
@@ -517,15 +555,16 @@
    \let\abstract\relax}
 %
 %
-%   Table of contents (right side page) (always page `i')
+%   Table of contents (right side page) (always page `i') ?? Not according to TAU format
 %
 %
 \def\textofToC#1{\gdef\@textofToC{#1}}  \textofToC{Table of Contents}
 \def\tableofcontents{\cleardoublepage
    \chapter*{\@textofToC\@mkboth{}{}}
    \pagestyle{plain}
-   \thispagestyle{empty}
-   \setcounter{page}{1}
+   %\thispagestyle{empty} 
+   %Commented to allow numbering of the first page in the TOC
+   %\setcounter{page}{1} Commented out 
    {\let\footnotemark\relax  % in case one is in the title
    \@starttoc{toc}
     }
@@ -570,9 +609,9 @@
 %   Acknowledgments
 %
 \def\textofAck#1{\gdef\@textofAck{#1}}  \textofAck{Acknowledgments}
-\long\def\acknowledgments#1{\chapter*{\@textofAck\@mkboth{}{}}
-  \addcontentsline{toc}{chapter}{\protect\@textofAck}
-   \thispagestyle{plain}
+\long\def\acknowledgments#1{ \cleardoublepage
+\chapter*{\@textofAck\@mkboth{}{}}    
+\thispagestyle{plain}
    #1\par
    \vfill
    \let\acknowledgments\relax}
@@ -584,6 +623,7 @@
 \def\textofDed#1{\gdef\@textofDed{#1}}  \textofDed{Dedication}
 \long\def\dedication#1{%\chapter*{\@textofDed\@mkboth{}{}}
   \cleardoublepage
+   \newpage
    \thispagestyle{empty}
    \mbox{}
    \vfill
@@ -650,6 +690,3 @@
 %% The 4pt vertical space is needed to give the text a bit of breathing 
 %% room. Thanks Andre Renaud for the fix.
 \fancyfoot[c]{\vspace{4pt}\thepage}
-
-%% as a supervisor is not necessarily a professor
-\def\Supervisor#1{\Professor{#1}}

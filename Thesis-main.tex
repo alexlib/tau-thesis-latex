@@ -1,19 +1,53 @@
-%\title{TAU_MSc_PhD_Thesis_Template}
-\documentclass{report}
+\documentclass[12pt,english,twoside]{report}
 \usepackage{mathptmx}
 \renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
 \usepackage[a4paper]{geometry}
-\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,headheight=1cm,headsep=1cm,footskip=1cm}
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{2} % Changed from 3 to 2. 0-chapter 1-section 2-subsection 
+\setcounter{tocdepth}{2} % Changed from 3 to 2. 0-chapter 1-section 2-subsection 
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \usepackage{verbatim}
 \usepackage{pdfpages}
 \usepackage{graphicx}
+\usepackage{subfig} %% This package has to be here
+\usepackage{lipsum}
+
+%Packages Added By George
 \usepackage{setspace}
+\usepackage{arabtex}
 \usepackage[numbers]{natbib}
 \usepackage{nomencl}
+\usepackage{paralist}
+\usepackage[linesnumbered]{algorithm2e}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage[cmex10]{amsmath}
+\usepackage{bbold}
+\usepackage{multirow}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\usepackage{eufrak}
+\usepackage{amssymb}
+
+% Theorem Styles
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+% Definition Styles
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\usepackage{etoolbox}
+\newtoggle{edit-mode}
+\togglefalse{edit-mode}  
+%\toggletrue{edit-mode}
+
 % the following is useful when we have the old nomencl.sty package
 \providecommand{\printnomenclature}{\printglossary}
 \providecommand{\makenomenclature}{\makeglossary}
@@ -22,82 +56,88 @@
 
 \makeatletter
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
-%% Because html converters don't know tabularnewline
-\providecommand{\tabularnewline}{\\}
-%% A simple dot to overcome graphicx limitations
-\newcommand{\lyxdot}{.}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \usepackage{tauthesis}
+\iftoggle{edit-mode}{
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=6cm,headheight=1cm,headsep=1cm,footskip=1cm, marginparwidth=5cm}
+}
+
 \usepackage[font={small,bf}, labelfont={small,bf}, margin=1cm]{caption}
 \usepackage{titlesec}
 \newcommand{\hsp}{\hspace{20pt}}
-
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp}{0pt}{\Huge\bfseries}
 
-
-\Title{\textbf{Thesis Title}}
-\Author{First Last}
-\Year{August 2013}
-\Supervisor{Prof. Alex Liberzon}
-\Department{School of Mechanical Engineering}
-\Degree{Master of Science}
-% \Degree{Doctor of Philosophy}
+\University{Tel Aviv University}
+\Faculty{The Iby and Aladar Fleischman Faculty of Engineering}
+\School{The Zandman-Slaner School of Graduate Studies}
+\Department {School of Mechanical Engineering}
+\Title{\textbf{ \uppercase {Thesis Title}}}
+\Degree{Master of Science in Engineering}
+\Author{Your name}
+\Year{September 2017}
+\Supervisor{Prof. First Supervisor}
+\SecondSupervisor{Dr. Second Supervisor}
 
 \makeatother
 
-\usepackage[english]{babel}
+\usepackage{babel}
+
+
 \begin{document}
 
-\prelimpages
+
+\pagenumbering{gobble}
 
 \titlepage
 
+\secondtitlepage
 
+\dedication{\textbf{\emph{To my whomever, \\
+for being whatever}}}
 
+\include{acknowledge}
 
-\include{Abstract}
+\cleardoublepage
+\pagenumbering{roman}
+\setcounter{page}{1} % Start preliminary pages numbering (roman numerals).
+
+\include{abstract}
 
 \tableofcontents{}
-\footnote{Split the thesis into separate chapters. Use \textbackslash{}include
-mode to include the separate files.}
 
-\acknowledgments{I would like to thank my ...}
+\cleardoublepage
 
-\textpages
+\addcontentsline{toc}{chapter}{Nomenclature}
+
+\printnomenclature
+
+\cleardoublepage
 
 \listoffigures
 
+\cleardoublepage
 
 \listoftables
 
+\textpages
 
-\printnomenclature{}
+\include{introduction}
 
-\include{Introduction}
+\include{chapter}
 
-
+\include{conclusions}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
 
-
 \appendix
+
 \include{appendix}
 
-\newpage{}
-
-\begin{comment}
-It is possible to create the Hebrew part in \LyX{}, but this is less
-of our concern. Any typesetting software like \LyX{} (or Word or OpenOffice)
-is as good for this purpose. After creating the PDF file from the
-Hebrew document, include it here using the Insert -> File -> External
-material -> PDFpages (one of the options). See the example below. 
-\end{comment}
-
+\cleardoublepage
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \includepdf[pages=-]{hebrew_part}
 \end{document}
