@@ -1,7 +1,11 @@
 # Thesis template for Tel-Aviv University
 A thesis latex formatted according the requirement in the Tel-Aviv University at the faculty of engineering.
 
-This project is based on a template by **Alex Liberzon** that can be found in [here](https://github.com/alexlib/tau_thesis_lyx_template).
+### Demos:
+1. Here is a link to the example pdf [Thesis-main.pdf](Thesis-main.pdf).
+2. A link to an online automatic latex build system: [latexonline.cc](https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fkourgeorge%2Ftau-thesis-latex&target=Thesis-main.tex&command=pdflatex&trackId=1550154999186)
+
+This project is based on a template by **Alex Liberzon** (@alexlib) that can be found in [here](https://github.com/alexlib/tau_thesis_lyx_template).
 Compared to Liberzon's original template, this version contains enhancements and new features including:
 
 1. Adherence to the engineering department updated requirements.
@@ -24,8 +28,8 @@ We have made an effort to include an example for every possible type of element 
 2. **acknowledge.tex** - the acknowledge part.
 3. **abstract.tex** - the abstract part.
 4. **introduction** - the introduction section (another chapter).
-4. **chapter.tex** - a chapter template.
-5. **conclusions.tex** - another chapter.
+4. **chapter1.tex** - a chapter template.
+5. **chapter2.tex** - another chapter template.
 6. **references.tex** - the bibliography source file.
 7. **hebrew_part.docx** - an MS Word document containing the hebrew title and abstract parts.
 8. **hebrew_part.pdf** - the "hebrew_part.docx" exported to pdf.
